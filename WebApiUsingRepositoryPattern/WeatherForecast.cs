@@ -1,4 +1,4 @@
-namespace WebApi_EF
+namespace WebApiUsingRepositoryPattern
 {
     public class WeatherForecast
     {

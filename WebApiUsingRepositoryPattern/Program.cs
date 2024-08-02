@@ -1,7 +1,10 @@
+
 using Microsoft.EntityFrameworkCore;
 using WebApi_EF.Context;
+using WebApiUsingRepositoryPattern.IRepo;
+using WebApiUsingRepositoryPattern.Repo;
 
-namespace WebApi_EF
+namespace WebApiUsingRepositoryPattern
 {
     public class Program
     {
@@ -10,16 +13,24 @@ namespace WebApi_EF
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddSwaggerGen();
+
             builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddSwaggerGen();
+            builder.Services.AddScoped<IStudentRepo, StudentRepo>();
             builder.Services.AddDbContext<StudentDbContext>(op => op.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")));
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseSwagger();
+                app.UseSwaggerUI();
+            }
 
             app.UseHttpsRedirection();
-            app.UseSwagger();
-            app.UseSwaggerUI();
 
             app.UseAuthorization();
 

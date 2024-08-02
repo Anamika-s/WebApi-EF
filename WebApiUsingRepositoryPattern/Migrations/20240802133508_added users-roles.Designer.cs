@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi_EF.Context;
 
 #nullable disable
 
-namespace WebApi_EF.Migrations
+namespace WebApiUsingRepositoryPattern.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    partial class StudentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240802133508_added users-roles")]
+    partial class addedusersroles
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,7 +85,7 @@ namespace WebApi_EF.Migrations
                         {
                             RoleId = 1,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 8, 2, 18, 25, 50, 712, DateTimeKind.Local).AddTicks(8051),
+                            CreatedOn = new DateTime(2024, 8, 2, 19, 5, 7, 485, DateTimeKind.Local).AddTicks(697),
                             IsActive = true,
                             RoleName = "Admin"
                         },
@@ -90,7 +93,7 @@ namespace WebApi_EF.Migrations
                         {
                             RoleId = 2,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 8, 2, 18, 25, 50, 712, DateTimeKind.Local).AddTicks(8054),
+                            CreatedOn = new DateTime(2024, 8, 2, 19, 5, 7, 485, DateTimeKind.Local).AddTicks(701),
                             IsActive = true,
                             RoleName = "TravelAdmin"
                         },
@@ -98,7 +101,7 @@ namespace WebApi_EF.Migrations
                         {
                             RoleId = 3,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 8, 2, 18, 25, 50, 712, DateTimeKind.Local).AddTicks(8055),
+                            CreatedOn = new DateTime(2024, 8, 2, 19, 5, 7, 485, DateTimeKind.Local).AddTicks(704),
                             IsActive = true,
                             RoleName = "Manager"
                         },
@@ -106,7 +109,7 @@ namespace WebApi_EF.Migrations
                         {
                             RoleId = 4,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 8, 2, 18, 25, 50, 712, DateTimeKind.Local).AddTicks(8057),
+                            CreatedOn = new DateTime(2024, 8, 2, 19, 5, 7, 485, DateTimeKind.Local).AddTicks(708),
                             IsActive = true,
                             RoleName = "Employee"
                         });

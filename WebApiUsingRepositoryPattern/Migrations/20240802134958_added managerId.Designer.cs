@@ -3,17 +3,20 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi_EF.Context;
 
 #nullable disable
 
-namespace WebApi_EF.Migrations
+namespace WebApiUsingRepositoryPattern.Migrations
 {
     [DbContext(typeof(StudentDbContext))]
-    partial class StudentDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240802134958_added managerId")]
+    partial class addedmanagerId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -82,7 +85,7 @@ namespace WebApi_EF.Migrations
                         {
                             RoleId = 1,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 8, 2, 18, 25, 50, 712, DateTimeKind.Local).AddTicks(8051),
+                            CreatedOn = new DateTime(2024, 8, 2, 19, 19, 57, 943, DateTimeKind.Local).AddTicks(1622),
                             IsActive = true,
                             RoleName = "Admin"
                         },
@@ -90,7 +93,7 @@ namespace WebApi_EF.Migrations
                         {
                             RoleId = 2,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 8, 2, 18, 25, 50, 712, DateTimeKind.Local).AddTicks(8054),
+                            CreatedOn = new DateTime(2024, 8, 2, 19, 19, 57, 943, DateTimeKind.Local).AddTicks(1625),
                             IsActive = true,
                             RoleName = "TravelAdmin"
                         },
@@ -98,7 +101,7 @@ namespace WebApi_EF.Migrations
                         {
                             RoleId = 3,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 8, 2, 18, 25, 50, 712, DateTimeKind.Local).AddTicks(8055),
+                            CreatedOn = new DateTime(2024, 8, 2, 19, 19, 57, 943, DateTimeKind.Local).AddTicks(1628),
                             IsActive = true,
                             RoleName = "Manager"
                         },
@@ -106,7 +109,7 @@ namespace WebApi_EF.Migrations
                         {
                             RoleId = 4,
                             CreatedBy = 1,
-                            CreatedOn = new DateTime(2024, 8, 2, 18, 25, 50, 712, DateTimeKind.Local).AddTicks(8057),
+                            CreatedOn = new DateTime(2024, 8, 2, 19, 19, 57, 943, DateTimeKind.Local).AddTicks(1630),
                             IsActive = true,
                             RoleName = "Employee"
                         });
@@ -144,6 +147,9 @@ namespace WebApi_EF.Migrations
                     b.Property<string>("LastName")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("ManagerId")
+                        .HasColumnType("int");
+
                     b.Property<string>("MobileNum")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -163,6 +169,8 @@ namespace WebApi_EF.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ManagerId");
+
                     b.HasIndex("RoleId");
 
                     b.ToTable("Users");
@@ -170,11 +178,19 @@ namespace WebApi_EF.Migrations
 
             modelBuilder.Entity("WebApi_EF.Models.User", b =>
                 {
+                    b.HasOne("WebApi_EF.Models.User", "Manager")
+                        .WithMany()
+                        .HasForeignKey("ManagerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("WebApi_EF.Models.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Manager");
 
                     b.Navigation("Role");
                 });
